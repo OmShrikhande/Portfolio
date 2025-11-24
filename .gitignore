@@ -1,0 +1,68 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+build/
+out/
+
+# Vite / cache
+.vite/
+.vitepress/dist/
+.parcel-cache/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+# Local env files often contain secrets — don't commit them.
+.env
+.env.local
+.env.*.local
+
+# Testing & coverage
+coverage/
+.nyc_output/
+test-results/
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# OS generated files and misc
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Package managers / lock files used by some setups (ignore pnp files)
+.pnp.*
+
+# ESLint / tooling caches
+.eslintcache
+
+# Storybook / vitepress / other build caches
+.turbo/
+.next/
+.cache/
+
+# Optional: local debug / logs from tools
+logs/
+
+public/
