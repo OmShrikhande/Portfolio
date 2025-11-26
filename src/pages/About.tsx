@@ -1,6 +1,17 @@
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { Award, Calendar, Code, Coffee, Heart, Star } from 'lucide-react'
+import ParallaxSection from '@components/ParallaxSection'
+import MagneticButton from '@components/MagneticButton'
+import { useRef } from 'react'
 
 export default function About() {
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -22,9 +33,31 @@ export default function About() {
   }
 
   const skills = [
-    { category: 'Frontend', items: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vue.js'] },
-    { category: 'Backend', items: ['Node.js', 'Express', 'Python', 'Django', 'PostgreSQL'] },
-    { category: 'Tools', items: ['Git', 'Docker', 'AWS', 'VS Code', 'Figma'] },
+    { 
+      category: 'Frontend', 
+      items: ['React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vue.js', 'Framer Motion'],
+      icon: '🎨',
+      color: 'from-neon-blue to-neon-cyan'
+    },
+    { 
+      category: 'Backend', 
+      items: ['Node.js', 'Express', 'Python', 'Django', 'PostgreSQL', 'MongoDB'],
+      icon: '⚙️',
+      color: 'from-neon-purple to-neon-pink'
+    },
+    { 
+      category: 'DevOps & Tools', 
+      items: ['AWS', 'Docker', 'Git', 'VS Code', 'Figma', 'Kubernetes'],
+      icon: '🛠️',
+      color: 'from-neon-green to-neon-yellow'
+    },
+  ]
+
+  const stats = [
+    { label: 'Years Experience', value: '5+', icon: Calendar },
+    { label: 'Projects Completed', value: '50+', icon: Code },
+    { label: 'Happy Clients', value: '30+', icon: Heart },
+    { label: 'Awards Won', value: '8', icon: Award },
   ]
 
   const timeline = [
@@ -51,21 +84,32 @@ export default function About() {
   ]
 
   return (
-    <div className="min-h-screen pt-20 pb-20">
-      <div className="container mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="py-20"
-        >
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl md:text-6xl font-bold mb-8 gradient-text"
+    <div ref={containerRef} className="min-h-screen pt-20 pb-20 relative">
+      <div className="container mx-auto px-4 relative z-10">
+        <ParallaxSection speed={0.2}>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+            className="py-20"
           >
-            About Me
-          </motion.h1>
+            <motion.div className="text-center mb-16">
+              <motion.h1
+                variants={itemVariants}
+                className="text-6xl md:text-8xl font-bold mb-6 gradient-text leading-tight"
+              >
+                About Me
+              </motion.h1>
+              <motion.p
+                variants={itemVariants}
+                className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
+              >
+                Passionate developer crafting digital experiences that make a difference
+              </motion.p>
+            </motion.div>
+            
+            
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <motion.div variants={itemVariants}>
@@ -178,6 +222,7 @@ export default function About() {
             Get In Touch
           </motion.button>
         </motion.div>
+        </ParallaxSection>
       </div>
     </div>
   )
