@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { Award, Calendar, Code, Coffee, Heart, Star } from 'lucide-react'
 import ParallaxSection from '@components/ParallaxSection'
 import MagneticButton from '@components/MagneticButton'
+import TechSphere from '@components/TechSphere'
 import { useRef } from 'react'
 
 export default function About() {
@@ -111,7 +112,7 @@ export default function About() {
             
             
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
             <motion.div variants={itemVariants}>
               <div className="glass rounded-lg p-8">
                 <img
@@ -129,30 +130,15 @@ export default function About() {
               </div>
             </motion.div>
 
-            <motion.div
-              variants={containerVariants}
-              className="space-y-6"
-            >
-              {skills.map((skillGroup, idx) => (
-                <motion.div
-                  key={idx}
-                  variants={itemVariants}
-                  className="glass rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-bold text-neon-blue mb-4">{skillGroup.category}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {skillGroup.items.map((skill) => (
-                      <motion.span
-                        key={skill}
-                        whileHover={{ scale: 1.05 }}
-                        className="px-4 py-2 bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 border border-neon-blue/30 rounded-lg text-sm font-medium text-neon-cyan hover:border-neon-blue/60 transition cursor-default"
-                      >
-                        {skill}
-                      </motion.span>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
+            <motion.div variants={itemVariants} className="flex items-center justify-center">
+              <TechSphere 
+                technologies={[
+                  'React', 'TypeScript', 'Tailwind CSS', 'Next.js', 'Vue.js', 'Framer Motion',
+                  'Node.js', 'Express', 'Python', 'Django', 'PostgreSQL', 'MongoDB',
+                  'AWS', 'Docker', 'Git', 'VS Code', 'Figma', 'Kubernetes',
+                  'JavaScript', 'HTML', 'CSS', 'GraphQL', 'Redux', 'Linux'
+                ]}
+              />
             </motion.div>
           </div>
         </motion.div>
