@@ -9,6 +9,7 @@ import Home from '@pages/Home'
 import About from '@pages/About'
 import Projects from '@pages/Projects'
 import Contact from '@pages/Contact'
+import NotFound from '@pages/NotFound'
 import { useSmoothScroll } from '@hooks/useSmoothScroll'
 
 function AnimatedRoutes() {
@@ -21,8 +22,7 @@ function AnimatedRoutes() {
   }
   
   const pageTransition = {
-    duration: 0.5,
-    ease: "easeInOut"
+    duration: 0.5
   }
 
   return (
@@ -70,6 +70,17 @@ function AnimatedRoutes() {
             transition={pageTransition}
           >
             <Contact />
+          </motion.div>
+        } />
+        <Route path="*" element={
+          <motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+          >
+            <NotFound />
           </motion.div>
         } />
       </Routes>
