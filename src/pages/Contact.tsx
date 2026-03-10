@@ -50,13 +50,20 @@ export default function Contact() {
     setLoading(true)
     setErrors({})
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Direct mailto link as requested (no 3rd party service)
+      const mailtoLink = `mailto:omshrikhande@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+      
+      window.location.href = mailtoLink;
+      
       setSubmitted(true)
-      setLoading(false)
       setFormData({ name: '', email: '', subject: '', message: '' })
       setTimeout(() => setSubmitted(false), 5000)
-    }, 1500)
+    } catch (error) {
+      setErrors({ submit: 'Failed to open email client. Please try manual email.' })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const containerVariants = {
@@ -80,16 +87,16 @@ export default function Contact() {
   }
 
   const contactMethods = [
-    { icon: Mail, label: 'Email', value: 'alex@example.com', href: 'mailto:alex@example.com', color: 'from-neon-blue to-neon-cyan' },
-    { icon: Linkedin, label: 'LinkedIn', value: '/in/alexjohnson', href: '#', color: 'from-neon-purple to-neon-pink' },
-    { icon: Github, label: 'GitHub', value: '@alexjohnson', href: '#', color: 'from-neon-green to-neon-yellow' },
-    { icon: Twitter, label: 'Twitter', value: '@alexjohnson', href: '#', color: 'from-neon-orange to-neon-pink' },
+    { icon: Mail, label: 'Email', value: 'omshrikhande@gmail.com', href: 'mailto:omshrikhande@gmail.com', color: 'from-neon-blue to-neon-cyan' },
+    { icon: Linkedin, label: 'LinkedIn', value: 'om-shrikhande-37108926a', href: 'https://linkedin.com/in/om-shrikhande-37108926a', color: 'from-neon-purple to-neon-pink' },
+    { icon: Github, label: 'GitHub', value: 'OmShrikhande', href: 'https://github.com/OmShrikhande', color: 'from-neon-green to-neon-yellow' },
+    { icon: Twitter, label: 'Twitter', value: '@OmShrikhande', href: 'https://twitter.com/OmShrikhande', color: 'from-neon-orange to-neon-pink' },
   ]
 
   const quickInfo = [
-    { icon: MapPin, label: 'Location', value: 'San Francisco, CA' },
-    { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
-    { icon: Clock, label: 'Timezone', value: 'PST (UTC-8)' },
+    { icon: MapPin, label: 'Location', value: 'Nagpur, Maharashtra' },
+    { icon: Phone, label: 'Phone', value: '+91 7028165780' },
+    { icon: Clock, label: 'Timezone', value: 'IST (UTC+5:30)' },
   ]
 
   return (

@@ -9,6 +9,7 @@ import Home from '@pages/Home'
 import About from '@pages/About'
 import Projects from '@pages/Projects'
 import Contact from '@pages/Contact'
+import Terminal from '@pages/Terminal'
 import NotFound from '@pages/NotFound'
 import { useSmoothScroll } from '@hooks/useSmoothScroll'
 
@@ -70,6 +71,17 @@ function AnimatedRoutes() {
             transition={pageTransition}
           >
             <Contact />
+          </motion.div>
+        } />
+        <Route path="/terminal" element={
+          <motion.div
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+          >
+            <Terminal />
           </motion.div>
         } />
         <Route path="*" element={

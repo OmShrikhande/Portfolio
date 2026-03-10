@@ -1,103 +1,43 @@
 import { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Sphere, OrbitControls } from '@react-three/drei'
-import * as THREE from 'three'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { getTechStackIcons } from '@utils/getIconUrl'
 
-interface TechIconProps {
-  position: [number, number, number]
-  iconUrl: string
-  techName: string
+interface TechCardProps {
+  name: string
+  url: string
+  index: number
 }
 
-function TechIcon({ position, iconUrl, techName }: TechIconProps) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const textureRef = useRef<THREE.Texture | null>(null)
-  const [texture, setTexture] = useState<THREE.Texture | null>(null)
-
-  useEffect(() => {
-    const textureLoader = new THREE.TextureLoader()
-    textureLoader.load(iconUrl, (loadedTexture) => {
-      setTexture(loadedTexture)
-      textureRef.current = loadedTexture
-    })
-  }, [iconUrl])
-
+function TechCard({ name, url, index }: TechCardProps) {
   return (
-    <mesh ref={meshRef} position={position}>
-      {texture && (
-        <planeGeometry args={[0.6, 0.6]} />
-      )}
-      {texture && (
-        <meshBasicMaterial map={texture} transparent={true} />
-      )}
-      {!texture && (
-        <>
-          <planeGeometry args={[0.6, 0.6]} />
-          <meshBasicMaterial color="#4f46e5" />
-        </>
-      )}
-    </mesh>
-  )
-}
-
-function SphereWithIcons({ techStack }: { techStack: Array<{ name: string; url: string }> }) {
-  const sphereRef = useRef<THREE.Group>(null)
-  const [isHovered, setIsHovered] = useState(false)
-
-  const positions = generateSpherePositions(techStack.length)
-
-  useFrame(() => {
-    if (sphereRef.current) {
-      if (!isHovered) {
-        sphereRef.current.rotation.x += 0.0005
-        sphereRef.current.rotation.y += 0.001
-      }
-    }
-  })
-
-  return (
-    <group ref={sphereRef} onPointerEnter={() => setIsHovered(true)} onPointerLeave={() => setIsHovered(false)}>
-      <Sphere args={[3, 32, 32]}>
-        <meshStandardMaterial
-          color="#1f2937"
-          emissive="#374151"
-          emissiveIntensity={0.5}
-          wireframe={false}
-          transparent={true}
-          opacity={0.3}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      whileHover={{ 
+        scale: 1.05, 
+        y: -5,
+        boxShadow: "0 20px 25px -5px rgba(0, 212, 255, 0.1), 0 10px 10px -5px rgba(0, 212, 255, 0.04)"
+      }}
+      className="group relative bg-dark-card/40 backdrop-blur-md border border-neon-blue/20 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 hover:border-neon-blue/50 transition-all duration-300"
+    >
+      <div className="relative w-12 h-12 flex items-center justify-center">
+        <motion.img 
+          src={url} 
+          alt={name}
+          className="w-10 h-10 object-contain z-10 grayscale group-hover:grayscale-0 transition-all duration-300"
         />
-      </Sphere>
-
-      {techStack.map((tech, idx) => (
-        <TechIcon
-          key={tech.name}
-          position={positions[idx]}
-          iconUrl={tech.url}
-          techName={tech.name}
-        />
-      ))}
-    </group>
+        <div className="absolute inset-0 bg-neon-blue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </div>
+      <span className="text-sm font-medium text-slate-400 group-hover:text-white transition-colors duration-300">
+        {name}
+      </span>
+      
+      {/* Subtle background glow on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/5 to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+    </motion.div>
   )
-}
-
-function generateSpherePositions(count: number): [number, number, number][] {
-  const positions: [number, number, number][] = []
-  const radius = 3.5
-
-  for (let i = 0; i < count; i++) {
-    const phi = Math.acos(-1 + (2 * i) / count)
-    const theta = Math.sqrt(count * Math.PI) * phi
-
-    const x = radius * Math.sin(phi) * Math.cos(theta)
-    const y = radius * Math.sin(phi) * Math.sin(theta)
-    const z = radius * Math.cos(phi)
-
-    positions.push([x, y, z])
-  }
-
-  return positions
 }
 
 interface TechSphereProps {
@@ -132,34 +72,26 @@ export default function TechSphere({ technologies }: TechSphereProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.8 }}
-      className="w-full h-screen max-h-[600px] flex flex-col items-center justify-center py-12"
+      className="w-full py-12"
     >
-      <h2 className="text-4xl font-bold mb-2 gradient-text text-center">
-        Tech Stack
-      </h2>
-      <p className="text-slate-400 text-center mb-8 max-w-2xl">
-        Technologies I work with, visualized in an interactive sphere. Hover to pause the rotation.
-      </p>
-
-      <div className="w-full h-[500px] bg-gradient-to-br from-slate-900/50 to-slate-800/50 rounded-2xl overflow-hidden border border-neon-blue/20 backdrop-blur-sm">
-        {isVisible && (
-          <Canvas camera={{ position: [0, 0, 8], fov: 50 }} gl={{ antialias: true, alpha: true }}>
-            <ambientLight intensity={0.6} />
-            <pointLight position={[10, 10, 10]} intensity={0.8} />
-            <SphereWithIcons techStack={techStack} />
-            <OrbitControls
-              enableZoom={true}
-              enablePan={true}
-              enableRotate={true}
-              autoRotate={true}
-              autoRotateSpeed={2}
-            />
-          </Canvas>
-        )}
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold mb-4 gradient-text">
+          Tech Stack
+        </h2>
+        <p className="text-slate-400 max-w-2xl mx-auto">
+          The technologies, frameworks, and tools I use to bring ideas to life.
+        </p>
       </div>
 
-      <div className="mt-8 text-center text-slate-400 text-sm">
-        <p>🖱️ Drag to rotate • 🔍 Scroll to zoom</p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {techStack.map((tech, idx) => (
+          <TechCard
+            key={tech.name}
+            name={tech.name}
+            url={tech.url}
+            index={idx}
+          />
+        ))}
       </div>
     </motion.div>
   )

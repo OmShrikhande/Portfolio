@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Home, User, Briefcase, Mail } from 'lucide-react'
+import { Menu, X, Home, User, Briefcase, Mail, Terminal } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ScrollProgress from '@components/ScrollProgress'
 
@@ -21,6 +21,7 @@ export default function Navigation() {
     { name: 'Home', path: '/', icon: Home },
     { name: 'About', path: '/about', icon: User },
     { name: 'Projects', path: '/projects', icon: Briefcase },
+    { name: 'Terminal', path: '/terminal', icon: Terminal },
     { name: 'Contact', path: '/contact', icon: Mail },
   ]
 
@@ -45,8 +46,9 @@ export default function Navigation() {
           whileTap={{ scale: 0.95 }}
           transition={{ duration: 0.3 }}
         >
-          <Link to="/" className="text-2xl font-bold gradient-text font-mono relative group">
-            <span className="relative z-10">{'< AJ />'}</span>
+          <Link to="/" className="text-2xl font-bold gradient-text font-mono relative group flex items-center gap-2">
+            <img src="/logo.svg" alt="Logo" className="w-8 h-8" />
+            <span className="relative z-10">{'< OS />'}</span>
             <motion.div 
               className="absolute inset-0 bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
               whileHover={{ scale: 1.1 }}

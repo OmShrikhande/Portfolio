@@ -8,6 +8,7 @@ import AnimatedText from '@components/AnimatedText'
 import ParallaxSection from '@components/ParallaxSection'
 import MagneticButton from '@components/MagneticButton'
 import FloatingElements from '@components/FloatingElements'
+import TechSphere from '@components/TechSphere'
 
 function Model() {
   const { scene } = useGLTF('/myTmodel.glb')
@@ -101,33 +102,33 @@ export default function Home() {
   const featuredProjects = [
     {
       id: 1,
-      title: 'E-Commerce Platform',
-      description: 'Full-stack e-commerce solution with modern UI/UX and payment integration',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop',
-      tech: ['React', 'TypeScript', 'Tailwind', 'Stripe'],
-      github: '#',
-      live: '#',
+      title: 'Kalasnikavo',
+      description: 'Dual Biometric Recognition System combining facial and fingerprint analysis for robust security.',
+      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop',
+      tech: ['Python', 'Flask', 'React', 'OpenCV'],
+      github: 'https://github.com/OmShrikhande/KALASNIKAVO',
+      live: 'https://github.com/OmShrikhande/KALASNIKAVO',
       featured: true,
     },
     {
       id: 2,
-      title: 'AI Dashboard',
-      description: 'Real-time analytics dashboard with AI-powered insights and data visualization',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
-      tech: ['Next.js', 'Python', 'TensorFlow', 'D3.js'],
-      github: '#',
-      live: '#',
+      title: 'Bhav App',
+      description: 'Real-time bullion trading platform featuring live price updates and historical data.',
+      image: 'https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=400&h=300&fit=crop',
+      tech: ['TypeScript', 'React', 'Tailwind', 'WebSocket'],
+      github: 'https://github.com/OmShrikhande/BHAV-APP',
+      live: 'https://github.com/OmShrikhande/BHAV-APP',
       featured: true,
     },
     {
       id: 3,
-      title: 'Mobile Banking App',
-      description: 'Secure mobile banking application with biometric authentication',
-      image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=400&h=300&fit=crop',
-      tech: ['React Native', 'Node.js', 'MongoDB', 'JWT'],
-      github: '#',
-      live: '#',
-      featured: false,
+      title: 'Viscous',
+      description: 'Feature-rich bus tracking application with real-time location and interactive maps.',
+      image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop',
+      tech: ['React Native', 'Expo', 'Google Maps', 'Firebase'],
+      github: 'https://github.com/OmShrikhande/VISCOUS',
+      live: 'https://github.com/OmShrikhande/VISCOUS',
+      featured: true,
     },
   ]
 
@@ -173,12 +174,13 @@ export default function Home() {
 
               <motion.div variants={itemVariants} initial="hidden" animate="visible">
                 <h1 className="text-5xl md:text-8xl font-bold mb-4 leading-tight">
-                  <AnimatedText 
-                    text="Om Shrikhande" 
-                    delay={1500} 
-                    speed={100}
-                    className="gradient-text"
-                  />
+                  <span className="glitch-text gradient-text" data-text="Om Shrikhande">
+                    <AnimatedText 
+                      text="Om Shrikhande" 
+                      delay={1500} 
+                      speed={100}
+                    />
+                  </span>
                   <span className="gradient-text animate-pulse">.</span>
                 </h1>
               </motion.div>
@@ -276,6 +278,12 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </motion.section>
+
+      <ParallaxSection speed={0.3} className="py-20">
+        <section className="container mx-auto px-4">
+          <TechSphere technologies={['React', 'TypeScript', 'Node.js', 'Python', 'AWS', 'Docker', 'MongoDB', 'PostgreSQL', 'Redis', 'WebRTC', 'TensorFlow', 'Flask']} />
+        </section>
+      </ParallaxSection>
 
       <ParallaxSection speed={0.3} className="py-20">
         <section className="container mx-auto px-4">

@@ -63,24 +63,29 @@ export default function About() {
 
   const timeline = [
     {
-      year: '2020',
-      title: 'Started Learning Web Development',
-      description: 'Began my journey into web development with HTML, CSS, and JavaScript',
-    },
-    {
-      year: '2021',
-      title: 'First Project Launch',
-      description: 'Built and deployed my first production web application',
-    },
-    {
       year: '2022',
-      title: 'Professional Experience',
-      description: 'Started working as a full-stack developer at a tech company',
+      title: 'Full-Stack Foundations',
+      description: 'Mastered the MERN stack and began building scalable web applications.',
+    },
+    {
+      year: '2023',
+      title: 'Mobile & AI Integration',
+      description: 'Expanded into React Native and integrated AI/ML models into web platforms.',
     },
     {
       year: '2024',
-      title: 'Freelance Developer',
-      description: 'Transitioned to freelance development, building solutions for startups',
+      title: 'Security & Biometrics',
+      description: 'Developed advanced security systems like Kalasnikavo using biometric recognition.',
+    },
+    {
+      year: '2025',
+      title: 'Scalable Systems & VPS',
+      description: 'Focused on high-performance deployments with LiveKit and real-time trading platforms like Bhav App.',
+    },
+    {
+      year: '2026',
+      title: 'MERN & React Native Engineer',
+      description: 'Building mission-critical systems and contributing to 50+ open-source repositories.',
     },
   ]
 
@@ -120,12 +125,12 @@ export default function About() {
                   alt="Profile"
                   className="w-full rounded-lg mb-6 object-cover h-96"
                 />
-                <h2 className="text-2xl font-bold mb-4">I'm passionate about creating web experiences</h2>
+                <h2 className="text-2xl font-bold mb-4">MERN & React Native Engineer building scalable systems</h2>
                 <p className="text-slate-400 leading-relaxed mb-6">
-                  With over 4 years of experience in web development, I've had the opportunity to work on diverse projects ranging from single-page applications to complex enterprise systems. I'm passionate about writing clean code, solving complex problems, and continuously learning new technologies.
+                  I specialize in building complex, high-performance web and mobile applications. My expertise spans across the entire development lifecycle, from designing intuitive user interfaces to architecting robust backend systems and real-time data pipelines.
                 </p>
                 <p className="text-slate-400 leading-relaxed">
-                  When I'm not coding, you can find me contributing to open-source projects, writing technical blogs, or exploring new technologies.
+                  With over 52 public repositories on GitHub, I have a proven track record of delivering innovative solutions in AI, Biometrics, Real-Time Trading, and more. I focus on building systems that solve real-world problems.
                 </p>
               </div>
             </motion.div>

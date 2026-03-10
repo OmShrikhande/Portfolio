@@ -5,10 +5,10 @@ import MagneticButton from './MagneticButton'
 
 export default function Footer() {
   const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub', color: 'hover:text-white' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn', color: 'hover:text-blue-400' },
+    { icon: Github, href: 'https://github.com/OmShrikhande', label: 'GitHub', color: 'hover:text-white' },
+    { icon: Linkedin, href: 'https://linkedin.com/in/om-shrikhande-37108926a', label: 'LinkedIn', color: 'hover:text-blue-400' },
     { icon: Twitter, href: 'https://twitter.com', label: 'Twitter', color: 'hover:text-sky-400' },
-    { icon: Mail, href: 'mailto:alex@example.com', label: 'Email', color: 'hover:text-neon-blue' },
+    { icon: Mail, href: 'mailto:omshrikhande@gmail.com', label: 'Email', color: 'hover:text-neon-blue' },
   ]
 
   const scrollToTop = () => {
@@ -72,6 +72,7 @@ export default function Footer() {
                 { name: 'Home', path: '/' },
                 { name: 'About', path: '/about' },
                 { name: 'Projects', path: '/projects' },
+                { name: 'Terminal', path: '/terminal' },
                 { name: 'Contact', path: '/contact' },
               ].map((link, idx) => (
                 <motion.li 
