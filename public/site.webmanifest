@@ -1,0 +1,21 @@
+{
+  "name": "Om Shrikhande - Portfolio",
+  "short_name": "Om Shrikhande",
+  "description": "Full-Stack Software Engineer & System Architect Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080d1a",
+  "theme_color": "#080d1a",
+  "icons": [
+    {
+      "src": "/images/om-avatar.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/om-avatar.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
