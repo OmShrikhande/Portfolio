@@ -1,124 +1,200 @@
 import { useState, useMemo } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { Github, ExternalLink, Search, Filter, Star, Calendar } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Github, ExternalLink, Search, Star, ArrowRight } from 'lucide-react'
 import { Project } from '@types/index'
-import ParallaxSection from '@components/ParallaxSection'
-import MagneticButton from '@components/MagneticButton'
 
 const projectsData: Project[] = [
   {
     id: '1',
-    title: 'Eva Dropping',
-    description: 'Local File Transfer System wirelessly transferring files between laptop and mobile devices.',
-    longDescription: 'A lightweight, high-performance solution for wirelessly transferring files between your laptop and mobile devices over the same Wi-Fi network. Built entirely with Node.js and HTML5.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['Node.js', 'HTML5', 'WebSockets', 'File API'],
+    title: 'Baba Beri App',
+    description: 'Full-stack community marketplace and e-commerce platform with dynamic catalog, cart mechanics, and payment gateway.',
+    longDescription: 'A modern, high-conversion e-commerce platform built for Baba Beri. Features reactive state management, product filtering, responsive cart flows, order tracking, and resilient backend database APIs.',
+    image: 'https://images.unsplash.com/photo-1556742049-0a67e557224f?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['React', 'JavaScript', 'Node.js', 'Express', 'Tailwind CSS', 'MongoDB'],
     category: 'fullstack',
-    github: 'https://github.com/OmShrikhande/EVA-DROPING',
-    liveLink: 'https://github.com/OmShrikhande/EVA-DROPING',
+    github: 'https://github.com/OmShrikhande/BabaBeri',
+    liveLink: 'https://github.com/OmShrikhande/BabaBeri',
     featured: true,
     order: 1,
   },
   {
     id: '2',
-    title: 'Kalasnikavo',
-    description: 'Dual Biometric Recognition System combining facial and fingerprint analysis.',
-    longDescription: 'A cutting-edge security solution that combines the power of facial recognition and fingerprint analysis to provide robust, multi-modal biometric authentication. Built with Flask and React.',
-    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['Python', 'Flask', 'React', 'OpenCV', 'TensorFlow'],
-    category: 'ai',
-    github: 'https://github.com/OmShrikhande/KALASNIKAVO',
-    liveLink: 'https://github.com/OmShrikhande/KALASNIKAVO',
+    title: 'Capita Prime HMS & Gym System',
+    description: 'Comprehensive enterprise hospital and gym management platform with automated billing, member lifecycle, and scheduling.',
+    longDescription: 'The most comprehensive facility management system built to handle membership subscriptions, automated billing cycles, personal trainer booking, attendance check-ins, and analytics reporting.',
+    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['JavaScript', 'Node.js', 'Express', 'SQL', 'REST API', 'Tailwind'],
+    category: 'fullstack',
+    github: 'https://github.com/OmShrikhande/gym-management-system',
+    liveLink: 'https://github.com/OmShrikhande/gym-management-system',
     featured: true,
     order: 2,
   },
   {
     id: '3',
-    title: 'Viscous',
-    description: 'Modern bus tracking application with real-time location and notifications.',
-    longDescription: 'Feature-rich bus tracking application built with React Native and Expo. Provides real-time bus location tracking, notifications, interactive maps, and a beautiful UI.',
-    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['React Native', 'Expo', 'Google Maps API', 'Firebase'],
-    category: 'mobile',
-    github: 'https://github.com/OmShrikhande/VISCOUS',
-    liveLink: 'https://github.com/OmShrikhande/VISCOUS',
+    title: 'Zdron & Headless MT5 Trading Bots',
+    description: 'Zero Drawdown algorithmic trading bot, headless MetaTrader 5 engine, and Forex currency pair correlation analysis.',
+    longDescription: 'High-frequency algorithmic trading systems including zdron (Zero Drawdown Bot), headless-MT5 automated trade execution, and frx-corelation for real-time statistical currency strength and correlation modeling, integrated with Telegram alert webhooks.',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Python', 'MQL5', 'MetaTrader 5', 'Telegram API', 'WebSockets'],
+    category: 'other',
+    github: 'https://github.com/OmShrikhande/zdron',
+    liveLink: 'https://github.com/OmShrikhande/headless-MT5',
     featured: true,
     order: 3,
   },
   {
     id: '4',
-    title: 'Auto Reel Scroller',
-    description: 'Android application for automatic scrolling functionality across all apps.',
-    longDescription: 'An Android application that provides automatic scrolling functionality across all apps using Android Accessibility Service, with customizable timers and scroll speeds.',
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['Kotlin', 'Android SDK', 'Accessibility Service'],
-    category: 'mobile',
-    github: 'https://github.com/OmShrikhande/AUTO-REEL-SCROLLER',
-    liveLink: 'https://github.com/OmShrikhande/AUTO-REEL-SCROLLER',
-    featured: false,
+    title: 'Kalasnikavo',
+    description: 'Dual Biometric Recognition Platform combining deep facial landmark recognition and fingerprint verification.',
+    longDescription: 'A cutting-edge security architecture that combines multi-modal biometric authentication for high-security access verification. Built with Flask, React, and OpenCV.',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Python', 'Flask', 'React', 'OpenCV', 'TensorFlow'],
+    category: 'ai',
+    github: 'https://github.com/OmShrikhande/kalasnikavo',
+    liveLink: 'https://github.com/OmShrikhande/kalasnikavo',
+    featured: true,
     order: 4,
   },
   {
     id: '5',
-    title: 'Bhav App',
-    description: 'Real-Time Bullion Trading Platform for tracking precious metal prices.',
-    longDescription: 'A comprehensive real-time bullion trading platform featuring live price updates, historical data analysis, and secure trading interface. Built with TypeScript.',
-    image: 'https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['TypeScript', 'React', 'Tailwind', 'WebSocket'],
+    title: 'Eva Dropping',
+    description: 'Local file transfer architecture enabling zero-cloud, encrypted wireless transfers between PC and mobile devices.',
+    longDescription: 'A lightweight, high-performance solution for wirelessly transferring files between your laptop and mobile devices over the same local network. Built entirely with Node.js, Express, and HTML5 WebSocket streams.',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Node.js', 'Express', 'HTML5', 'WebSockets', 'File API'],
     category: 'fullstack',
-    github: 'https://github.com/OmShrikhande/BHAV-APP',
-    liveLink: 'https://github.com/OmShrikhande/BHAV-APP',
+    github: 'https://github.com/OmShrikhande/eva-droping',
+    liveLink: 'https://github.com/OmShrikhande/eva-droping',
     featured: true,
     order: 5,
   },
   {
     id: '6',
-    title: 'LiveKit VPS Deployment',
-    description: 'High-performance script for deploying LiveKit WebRTC on Virtual Private Servers.',
-    longDescription: 'A streamlined deployment solution for setting up LiveKit WebRTC servers on VPS environments, optimized for low latency and high scalability.',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['JavaScript', 'LiveKit', 'WebRTC', 'Linux', 'Docker'],
+    title: 'ProxStream & LiveKit VPS',
+    description: 'Ultra-low latency live video streaming platform and automated WebRTC VPS infrastructure orchestration.',
+    longDescription: 'A streamlined DevOps and real-time streaming solution for configuring, securing, and benchmarking LiveKit WebRTC media servers across bare-metal and cloud VPS clusters, powering high-throughput broadcasting.',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['LiveKit', 'WebRTC', 'JavaScript', 'Linux', 'Docker'],
     category: 'other',
-    github: 'https://github.com/OmShrikhande/LIVEKIT--VPS-DEPLOYMENT',
-    liveLink: 'https://github.com/OmShrikhande/LIVEKIT--VPS-DEPLOYMENT',
-    featured: false,
+    github: 'https://github.com/OmShrikhande/livekit--Vps-Deployment',
+    liveLink: 'https://github.com/OmShrikhande/livekit--Vps-Deployment',
+    featured: true,
     order: 6,
   },
   {
     id: '7',
-    title: 'Whole DB Facial Recognition',
-    description: 'Large-scale facial recognition and person verification system using webcam input.',
-    longDescription: 'A robust facial recognition system built with Flask, enabling real-time face detection, recognition, and registration against a large database of profiles.',
-    image: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800&h=600&fit=crop&auto=format&dpr=2',
-    technologies: ['Python', 'Flask', 'JavaScript', 'OpenCV'],
-    category: 'ai',
-    github: 'https://github.com/OmShrikhande/WHOLE-DB-FACIAL-RECOGNITON',
-    liveLink: 'https://github.com/OmShrikhande/WHOLE-DB-FACIAL-RECOGNITON',
+    title: 'E-Learning Application',
+    description: 'Interactive online education platform featuring course modules, video lectures, student testing, and grading.',
+    longDescription: 'Comprehensive educational management web portal supporting role-based access for students and instructors, interactive video course curriculum, real-time quizzes, grading metrics, and progress tracking.',
+    image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['PHP', 'MySQL', 'JavaScript', 'HTML5', 'Bootstrap'],
+    category: 'web',
+    github: 'https://github.com/OmShrikhande/Elearning-website-php',
+    liveLink: 'https://github.com/OmShrikhande/Elearning-website-php',
     featured: false,
     order: 7,
   },
   {
     id: '8',
-    title: 'Lamborgini Clone',
-    description: 'A high-performance visual clone of the official Lamborghini website.',
-    longDescription: 'A visual tribute to the Lamborghini website, focusing on premium animations, high-fidelity graphics, and immersive user experience.',
+    title: 'Viscous',
+    description: 'Real-time urban transit and school bus tracking system with live GPS telemetry, interactive map feeds, and arrival alerts.',
+    longDescription: 'Feature-rich transit tracking application built with React Native and Flutter. Provides real-time bus location tracking, instant arrival notifications, interactive route maps, and a low-cognitive-load parent interface.',
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['React Native', 'Expo', 'Flutter', 'Google Maps API', 'Firebase'],
+    category: 'mobile',
+    github: 'https://github.com/OmShrikhande/viscous',
+    liveLink: 'https://github.com/OmShrikhande/viscous_frontend',
+    featured: false,
+    order: 8,
+  },
+  {
+    id: '9',
+    title: 'Auto Reel Scroller',
+    description: 'Android accessibility automation utility providing configurable touchless scrolling and custom speed curves.',
+    longDescription: 'An Android application that provides automated hands-free scrolling functionality across multiple content applications using Android Accessibility Service with customizable gesture timing and speed curves.',
+    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Kotlin', 'Android SDK', 'Accessibility Service'],
+    category: 'mobile',
+    github: 'https://github.com/OmShrikhande/Auto-reel-Scroller',
+    liveLink: 'https://github.com/OmShrikhande/Auto-reel-Scroller',
+    featured: false,
+    order: 9,
+  },
+  {
+    id: '10',
+    title: 'Bhav App',
+    description: 'Real-time bullion and commodity trading platform with live WebSocket ticks, spread analysis, and charts.',
+    longDescription: 'A comprehensive real-time bullion trading platform featuring live price feeds, historical market data analysis, spread calculation, and an ultra-low latency trading interface.',
+    image: 'https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['TypeScript', 'React', 'Tailwind CSS', 'WebSocket'],
+    category: 'fullstack',
+    github: 'https://github.com/OmShrikhande/Bhav-App',
+    liveLink: 'https://github.com/OmShrikhande/Bhav-App',
+    featured: false,
+    order: 10,
+  },
+  {
+    id: '11',
+    title: 'Rizzer & Brit AI Assistant Bots',
+    description: 'Conversational assistant and automated communication bots with NLP processing and messaging integration.',
+    longDescription: 'Suite of AI conversational tools and automation bots (Rizzer, Brit, whatsapp-messaging) facilitating smart suggestions, automated notifications, and seamless chat workflows.',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Python', 'JavaScript', 'Node.js', 'NLP', 'Automation API'],
+    category: 'ai',
+    github: 'https://github.com/OmShrikhande',
+    liveLink: 'https://github.com/OmShrikhande',
+    featured: false,
+    order: 11,
+  },
+  {
+    id: '12',
+    title: 'NullTor',
+    description: 'Encrypted LAN peer-to-peer shared notepad with zero-knowledge browser-side encryption.',
+    longDescription: 'A secure shared notepad for multiple PCs on the same Wi-Fi / LAN. Text is encrypted in the browser before transmission, ensuring zero-knowledge relay by the lightweight host server.',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['JavaScript', 'Web Cryptography API', 'Node.js', 'WebSockets'],
+    category: 'fullstack',
+    github: 'https://github.com/OmShrikhande/nulltor',
+    liveLink: 'https://github.com/OmShrikhande/nulltor',
+    featured: false,
+    order: 12,
+  },
+  {
+    id: '13',
+    title: 'Whole DB Facial Recognition',
+    description: 'High-speed biometric identification system querying live webcam captures against massive profile databases.',
+    longDescription: 'A robust computer vision platform built with Flask and OpenCV, enabling real-time face detection, embedding generation, and high-confidence 1:N verification.',
+    image: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?w=800&h=600&fit=crop&auto=format&dpr=2',
+    technologies: ['Python', 'Flask', 'JavaScript', 'OpenCV'],
+    category: 'ai',
+    github: 'https://github.com/OmShrikhande/whole-db-facial-recogniton',
+    liveLink: 'https://github.com/OmShrikhande/whole-db-facial-recogniton',
+    featured: false,
+    order: 13,
+  },
+  {
+    id: '14',
+    title: 'Lamborghini Clone Experience',
+    description: 'High-fidelity interactive visual reproduction demonstrating complex layout animations and 60fps micro-interactions.',
+    longDescription: 'A visual engineering showcase focusing on fluid GPU animations, asset lazy-loading, and responsive high-end aesthetic execution.',
     image: 'https://images.unsplash.com/photo-1525609004556-c46c7d6cf048?w=800&h=600&fit=crop&auto=format&dpr=2',
     technologies: ['JavaScript', 'HTML5', 'CSS3', 'GSAP'],
     category: 'web',
-    github: 'https://github.com/OmShrikhande/LAMBORGINICLONE',
-    liveLink: 'https://github.com/OmShrikhande/LAMBORGINICLONE',
+    github: 'https://github.com/OmShrikhande/LamborginiClone',
+    liveLink: 'https://github.com/OmShrikhande/LamborginiClone',
     featured: false,
-    order: 8,
+    order: 14,
   },
 ]
 
 const categories = [
-  { id: 'all', name: 'All Projects', icon: '🚀' },
-  { id: 'web', name: 'Web Apps', icon: '🌐' },
-  { id: 'mobile', name: 'Mobile', icon: '📱' },
-  { id: 'fullstack', name: 'Full Stack', icon: '⚡' },
-  { id: 'ai', name: 'AI/ML', icon: '🤖' },
-  { id: 'other', name: 'Other', icon: '🔧' },
+  { id: 'all', name: 'All Repositories', icon: '⚡' },
+  { id: 'fullstack', name: 'Full Stack', icon: '💻' },
+  { id: 'ai', name: 'AI & Biometrics', icon: '🧠' },
+  { id: 'mobile', name: 'Mobile Apps', icon: '📱' },
+  { id: 'web', name: 'Web Experiences', icon: '🌐' },
+  { id: 'other', name: 'DevOps & Systems', icon: '☁️' },
 ] as const
 
 type CategoryId = typeof categories[number]['id']
@@ -126,18 +202,21 @@ type CategoryId = typeof categories[number]['id']
 export default function Projects() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all')
   const [searchTerm, setSearchTerm] = useState('')
-  const [sortBy, setSortBy] = useState<'name' | 'date' | 'featured'>('featured')
+  const [sortBy, setSortBy] = useState<'featured' | 'name' | 'date'>('featured')
 
   const filteredProjects = useMemo(() => {
-    let filtered = selectedCategory === 'all'
-      ? projectsData
-      : projectsData.filter(p => p.category === selectedCategory)
+    let filtered =
+      selectedCategory === 'all'
+        ? projectsData
+        : projectsData.filter((p) => p.category === selectedCategory)
 
     if (searchTerm) {
-      filtered = filtered.filter(p => 
-        p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.technologies.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()))
+      const q = searchTerm.toLowerCase()
+      filtered = filtered.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.description.toLowerCase().includes(q) ||
+          p.technologies.some((tech) => tech.toLowerCase().includes(q))
       )
     }
 
@@ -149,255 +228,184 @@ export default function Projects() {
     })
   }, [selectedCategory, searchTerm, sortBy])
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  }
-
   return (
-    <div className="min-h-screen pt-20 pb-20 relative">
-      <div className="container mx-auto px-4 relative z-10">
-        <ParallaxSection speed={0.2}>
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mb-20 text-center"
-          >
-            <motion.h1 
-              className="text-6xl md:text-8xl font-bold mb-8 gradient-text leading-tight"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, type: "spring", stiffness: 100 }}
-            >
-              My Projects
-            </motion.h1>
-            <motion.p 
-              className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed mb-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-            >
-              A showcase of innovative solutions built with cutting-edge technologies, 
-              each project representing a unique challenge and creative solution.
-            </motion.p>
-            
-            {/* Search and Filter Controls */}
-            <motion.div 
-              className="flex flex-col md:flex-row gap-4 items-center justify-center mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-3 bg-dark-card border border-dark-border rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-neon-blue transition-all w-80"
-                />
-              </div>
-              
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as 'name' | 'date' | 'featured')}
-                className="px-4 py-3 bg-dark-card border border-dark-border rounded-xl text-white focus:outline-none focus:border-neon-blue transition-all"
-              >
-                <option value="featured">Sort by Featured</option>
-                <option value="name">Sort by Name</option>
-                <option value="date">Sort by Date</option>
-              </select>
-            </motion.div>
-          </motion.div>
-        </ParallaxSection>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mb-16"
-        >
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, scale: 0 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 + 0.7 }}
-              >
-                <MagneticButton
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={`group px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    selectedCategory === category.id
-                      ? 'bg-gradient-to-r from-neon-blue to-neon-purple text-white shadow-glow-lg'
-                      : 'glass-hover text-slate-300 hover:text-neon-blue border border-neon-blue/30 hover:border-neon-blue/60'
-                  }`}
-                >
-                  <span className="text-lg">{category.icon}</span>
-                  <span>{category.name}</span>
-                  {selectedCategory === category.id && (
-                    <motion.div
-                      layoutId="categoryIndicator"
-                      className="absolute inset-0 bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 rounded-xl"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    />
-                  )}
-                </MagneticButton>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div className="mb-8 text-center">
-          <p className="text-slate-400">
-            Showing <span className="text-neon-blue font-semibold">{filteredProjects.length}</span> projects
-            {searchTerm && (
-              <span> matching "<span className="text-neon-cyan">{searchTerm}</span>"
-              </span>
-            )}
+    <div className="min-h-screen pt-24 pb-20 relative">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+        {/* Header */}
+        <div className="max-w-3xl mb-12">
+          <span className="text-xs uppercase tracking-widest font-mono text-sky-400 block mb-3">
+            Open Source & Commercial Work
+          </span>
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
+            Engineered Projects
+          </h1>
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            A curated showcase of production applications, biometric algorithms, real-time trading engines, and cloud orchestration systems.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
-        >
+        {/* Filter & Search Bar */}
+        <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between mb-8 pb-6 border-b border-white/10">
+          {/* Search Box */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3.5 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+            <input
+              type="text"
+              placeholder="Search by title, technology, or domain..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 bg-slate-900/80 border border-white/10 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors"
+            />
+          </div>
+
+          {/* Sort Control */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono text-slate-400">Sort:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'featured' | 'name' | 'date')}
+              className="px-3 py-2 bg-slate-900/80 border border-white/10 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-sky-500 transition-colors"
+            >
+              <option value="featured">Featured First</option>
+              <option value="name">Alphabetical</option>
+              <option value="date">Chronological</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Categories Pills */}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat.id
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all duration-200 ${
+                  isSelected
+                    ? 'bg-slate-100 text-slate-950 font-semibold shadow-sm'
+                    : 'bg-slate-900/60 hover:bg-slate-800/80 text-slate-400 hover:text-white border border-white/10'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.name}</span>
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Project Results Count */}
+        <div className="mb-6 text-xs font-mono text-slate-400">
+          Showing <span className="text-white font-semibold">{filteredProjects.length}</span> repositories
+          {searchTerm && <span> matching "{searchTerm}"</span>}
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
+            {filteredProjects.map((project) => (
               <motion.div
                 key={project.id}
                 layout
-                variants={itemVariants}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -50, scale: 0.9 }}
-                transition={{ 
-                  duration: 0.5, 
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100
-                }}
-                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35 }}
+                className="glass-hover rounded-2xl overflow-hidden flex flex-col justify-between group border border-white/10"
               >
-                <div className="glass-hover rounded-2xl overflow-hidden h-full flex flex-col hover-lift relative group">
-                  {project.featured && (
-                    <div className="absolute top-4 left-4 z-20">
-                      <motion.div 
-                        className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full text-xs font-bold text-white shadow-glow"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        <Star className="w-3 h-3" />
-                        <span>Featured</span>
-                      </motion.div>
-                    </div>
-                  )}
-                  
-                  <div className="relative overflow-hidden h-64 bg-gradient-to-br from-dark-bg to-dark-card">
+                <div>
+                  {/* Image & Header */}
+                  <div className="relative h-48 overflow-hidden bg-slate-900">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-card/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                    
-                    <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                      <motion.a
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+
+                    {project.featured && (
+                      <div className="absolute top-3 left-3">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-950/90 text-sky-300 border border-sky-500/30 backdrop-blur-md">
+                          <Star className="w-2.5 h-2.5 fill-sky-300" />
+                          <span>Featured</span>
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="absolute top-3 right-3 flex gap-1.5">
+                      <a
                         href={project.github}
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="p-3 glass rounded-xl hover:bg-neon-blue/20 transition-all backdrop-blur-md"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors border border-white/10"
+                        title="GitHub Repository"
+                        aria-label={`${project.title} GitHub repository`}
                       >
-                        <Github size={20} className="text-white" />
-                      </motion.a>
-                      <motion.a
+                        <Github size={15} />
+                      </a>
+                      <a
                         href={project.liveLink}
-                        whileHover={{ scale: 1.1, rotate: -5 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="p-3 glass rounded-xl hover:bg-neon-purple/20 transition-all backdrop-blur-md"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white transition-colors border border-white/10"
+                        title="Live Link"
+                        aria-label={`${project.title} live demo`}
                       >
-                        <ExternalLink size={20} className="text-white" />
-                      </motion.a>
+                        <ExternalLink size={15} />
+                      </a>
                     </div>
                   </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-neon-blue transition-colors">
+                  {/* Body */}
+                  <div className="p-5">
+                    <h3 className="text-lg font-bold text-white mb-2 group-hover:text-sky-300 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-slate-400 mb-6 leading-relaxed flex-1">
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-4">
                       {project.description}
                     </p>
+                  </div>
+                </div>
 
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.technologies.map((tech, techIdx) => (
-                        <motion.span
-                          key={tech}
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.1 + techIdx * 0.05 }}
-                          className="px-3 py-1 bg-gradient-to-r from-neon-blue/10 to-neon-purple/10 text-neon-cyan text-sm rounded-full border border-neon-blue/30 hover:border-neon-blue/60 hover:shadow-glow transition-all cursor-default"
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-3 pt-4 border-t border-dark-border/50">
-                      <motion.a
-                        href={project.github}
-                        whileHover={{ scale: 1.05, x: 5 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 text-neon-blue hover:text-neon-cyan transition text-sm font-medium flex-1 p-2 rounded-lg hover:bg-neon-blue/5"
+                {/* Tech Pills Footer */}
+                <div className="px-5 pb-5 pt-0">
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-white/5">
+                    {project.technologies.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-900/90 text-slate-300 border border-white/5"
                       >
-                        <Github size={16} />
-                        <span>Code</span>
-                      </motion.a>
-                      <motion.a
-                        href={project.liveLink}
-                        whileHover={{ scale: 1.05, x: 5 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex items-center gap-2 text-neon-purple hover:text-neon-pink transition text-sm font-medium flex-1 p-2 rounded-lg hover:bg-neon-purple/5"
-                      >
-                        <ExternalLink size={16} />
-                        <span>Live Demo</span>
-                      </motion.a>
-                    </div>
+                        {t}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
-        {filteredProjects.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
+        {/* GitHub External Callout */}
+        <div className="mt-16 p-8 rounded-2xl glass border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+          <div>
+            <h3 className="text-lg font-bold text-white mb-1">
+              Interested in more open-source experiments?
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-400">
+              Browse all 52+ public repositories, pull requests, and contributions directly on GitHub.
+            </p>
+          </div>
+          <a
+            href="https://github.com/OmShrikhande"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white border border-white/10 text-xs font-semibold transition-colors flex-shrink-0"
           >
-            <p className="text-slate-400 text-lg">No projects found in this category.</p>
-          </motion.div>
-        )}
+            <Github size={16} />
+            <span>Visit @OmShrikhande</span>
+          </a>
+        </div>
       </div>
     </div>
   )

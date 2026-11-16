@@ -1,17 +1,8 @@
-import { useState, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { Send, Mail, Linkedin, Github, Twitter, MapPin, Phone, Clock, CheckCircle } from 'lucide-react'
-import ParallaxSection from '@components/ParallaxSection'
-import MagneticButton from '@components/MagneticButton'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Send, Mail, Linkedin, Github, Twitter, MapPin, Phone, Clock, CheckCircle, ArrowRight } from 'lucide-react'
 
 export default function Contact() {
-  const containerRef = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  })
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -25,346 +16,260 @@ export default function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
-    
-    if (!formData.name.trim()) newErrors.name = 'Name is required'
-    if (!formData.email.trim()) newErrors.email = 'Email is required'
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid'
+    if (!formData.name.trim()) newErrors.name = 'Full name is required'
+    if (!formData.email.trim()) newErrors.email = 'Valid email is required'
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Please enter a valid email address'
     if (!formData.subject.trim()) newErrors.subject = 'Subject is required'
     if (!formData.message.trim()) newErrors.message = 'Message is required'
     else if (formData.message.length < 10) newErrors.message = 'Message must be at least 10 characters'
-    
+
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
     if (!validateForm()) return
-    
+
     setLoading(true)
     setErrors({})
 
     try {
-      // Direct mailto link as requested (no 3rd party service)
-      const mailtoLink = `mailto:omshrikhande@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
-      
-      window.location.href = mailtoLink;
-      
+      const mailtoLink = `mailto:omshrikhande@gmail.com?subject=${encodeURIComponent(
+        formData.subject
+      )}&body=${encodeURIComponent(
+        `From: ${formData.name} (${formData.email})\n\n${formData.message}`
+      )}`
+      window.location.href = mailtoLink
       setSubmitted(true)
       setFormData({ name: '', email: '', subject: '', message: '' })
-      setTimeout(() => setSubmitted(false), 5000)
-    } catch (error) {
-      setErrors({ submit: 'Failed to open email client. Please try manual email.' })
+      setTimeout(() => setSubmitted(false), 6000)
+    } catch {
+      setErrors({ submit: 'Unable to open email client. Please email directly to omshrikhande@gmail.com' })
     } finally {
       setLoading(false)
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8 },
-    },
-  }
-
   const contactMethods = [
-    { icon: Mail, label: 'Email', value: 'omshrikhande@gmail.com', href: 'mailto:omshrikhande@gmail.com', color: 'from-neon-blue to-neon-cyan' },
-    { icon: Linkedin, label: 'LinkedIn', value: 'om-shrikhande-37108926a', href: 'https://linkedin.com/in/om-shrikhande-37108926a', color: 'from-neon-purple to-neon-pink' },
-    { icon: Github, label: 'GitHub', value: 'OmShrikhande', href: 'https://github.com/OmShrikhande', color: 'from-neon-green to-neon-yellow' },
-    { icon: Twitter, label: 'Twitter', value: '@OmShrikhande', href: 'https://twitter.com/OmShrikhande', color: 'from-neon-orange to-neon-pink' },
+    {
+      icon: Mail,
+      label: 'Direct Email',
+      value: 'omshrikhande@gmail.com',
+      href: 'mailto:omshrikhande@gmail.com',
+      desc: 'Typical response within 24 hours',
+    },
+    {
+      icon: Linkedin,
+      label: 'LinkedIn Network',
+      value: 'om-shrikhande-37108926a',
+      href: 'https://linkedin.com/in/om-shrikhande-37108926a',
+      desc: 'Professional background & endorsements',
+    },
+    {
+      icon: Github,
+      label: 'GitHub Profile',
+      value: 'OmShrikhande',
+      href: 'https://github.com/OmShrikhande',
+      desc: '52+ public repositories & code samples',
+    },
+    {
+      icon: Twitter,
+      label: 'X (Twitter)',
+      value: '@OmShrikhande',
+      href: 'https://twitter.com/OmShrikhande',
+      desc: 'Tech commentary & engineering updates',
+    },
   ]
 
-  const quickInfo = [
-    { icon: MapPin, label: 'Location', value: 'Nagpur, Maharashtra' },
-    { icon: Phone, label: 'Phone', value: '+91 7028165780' },
-    { icon: Clock, label: 'Timezone', value: 'IST (UTC+5:30)' },
+  const quickMeta = [
+    { icon: MapPin, label: 'Base Location', value: 'Nagpur, Maharashtra, India' },
+    { icon: Phone, label: 'Direct Phone', value: '+91 7028165780' },
+    { icon: Clock, label: 'Timezone', value: 'Indian Standard Time (UTC+5:30)' },
   ]
 
   return (
-    <div ref={containerRef} className="min-h-screen pt-20 pb-20 relative">
-      <div className="container mx-auto px-4 relative z-10">
-        <ParallaxSection speed={0.2}>
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="mb-20 text-center"
-          >
-            <motion.h1
-              variants={itemVariants}
-              className="text-6xl md:text-8xl font-bold mb-8 gradient-text leading-tight"
-            >
-              Let's Connect
-            </motion.h1>
-            <motion.p
-              variants={itemVariants}
-              className="text-slate-400 text-xl max-w-3xl mx-auto leading-relaxed"
-            >
-              Ready to bring your ideas to life? I'm always excited to discuss new projects, 
-              creative opportunities, or just have a friendly chat about technology.
-            </motion.p>
-          </motion.div>
-        </ParallaxSection>
+    <div className="min-h-screen pt-24 pb-20 relative">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+        {/* Header */}
+        <div className="max-w-3xl mb-14">
+          <span className="text-xs uppercase tracking-widest font-mono text-sky-400 block mb-3">
+            Initiate Contact
+          </span>
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-4">
+            Let's Start a Conversation.
+          </h1>
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            Whether you want to discuss a new software engineering venture, technical consulting, full-stack architecture, or career opportunities, I'd be glad to connect.
+          </p>
+        </div>
 
-        {/* Quick Info Cards */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-        >
-          {quickInfo.map((info, idx) => {
-            const Icon = info.icon
-            return (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Contact Form */}
+          <div className="lg:col-span-7 glass rounded-3xl p-8 sm:p-10 border border-white/10">
+            <h2 className="text-2xl font-bold text-white mb-2">Send a Message</h2>
+            <p className="text-xs sm:text-sm text-slate-400 mb-8">
+              Fill out the details below and your default mail client will prepare a structured message.
+            </p>
+
+            {submitted && (
               <motion.div
-                key={info.label}
-                variants={itemVariants}
-                className="glass-hover p-6 rounded-2xl text-center hover-lift group"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 mb-6 rounded-2xl bg-emerald-950/80 border border-emerald-800/50 flex items-center gap-3 text-emerald-300 text-xs sm:text-sm"
               >
-                <Icon className="w-8 h-8 mx-auto mb-3 text-neon-blue group-hover:scale-110 transition-transform" />
-                <h3 className="font-semibold text-white mb-1">{info.label}</h3>
-                <p className="text-slate-400 text-sm">{info.value}</p>
+                <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                <span>Message prepared! Opening your mail client now.</span>
               </motion.div>
-            )
-          })}
-        </motion.div>
+            )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="lg:col-span-2"
-          >
-            <motion.div
-              variants={itemVariants}
-              className="glass-hover rounded-2xl p-8 hover-lift"
-              style={{ y }}
-            >
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <motion.div
-                    variants={itemVariants}
-                    className="space-y-2"
-                  >
-                    <label className="text-sm font-semibold text-neon-blue flex items-center gap-2">
-                      Name
-                      {formData.name && !errors.name && <CheckCircle className="w-4 h-4 text-neon-green" />}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your full name"
-                      className={`w-full px-4 py-4 bg-dark-bg border rounded-xl text-white placeholder-slate-500 focus:outline-none transition-all ${
-                        errors.name ? 'border-red-500 focus:border-red-400' : 'border-dark-border focus:border-neon-blue focus:shadow-glow'
-                      }`}
-                    />
-                    {errors.name && (
-                      <motion.p 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-400 text-sm"
-                      >
-                        {errors.name}
-                      </motion.p>
-                    )}
-                  </motion.div>
+            {errors.submit && (
+              <div className="p-4 mb-6 rounded-2xl bg-rose-950/80 border border-rose-800/50 text-rose-300 text-xs">
+                {errors.submit}
+              </div>
+            )}
 
-                  <motion.div
-                    variants={itemVariants}
-                    className="space-y-2"
-                  >
-                    <label className="text-sm font-semibold text-neon-blue flex items-center gap-2">
-                      Email
-                      {formData.email && !errors.email && <CheckCircle className="w-4 h-4 text-neon-green" />}
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your@email.com"
-                      className={`w-full px-4 py-4 bg-dark-bg border rounded-xl text-white placeholder-slate-500 focus:outline-none transition-all ${
-                        errors.email ? 'border-red-500 focus:border-red-400' : 'border-dark-border focus:border-neon-blue focus:shadow-glow'
-                      }`}
-                    />
-                    {errors.email && (
-                      <motion.p 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-red-400 text-sm"
-                      >
-                        {errors.email}
-                      </motion.p>
-                    )}
-                  </motion.div>
-                </div>
-
-                <motion.div
-                  variants={itemVariants}
-                  className="space-y-2"
-                >
-                  <label className="text-sm font-semibold text-neon-blue flex items-center gap-2">
-                    Subject
-                    {formData.subject && !errors.subject && <CheckCircle className="w-4 h-4 text-neon-green" />}
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="block text-xs font-mono text-slate-300 mb-2">
+                    Your Name *
                   </label>
                   <input
                     type="text"
-                    name="subject"
-                    value={formData.subject}
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
-                    placeholder="What's this about?"
-                    className={`w-full px-4 py-4 bg-dark-bg border rounded-xl text-white placeholder-slate-500 focus:outline-none transition-all ${
-                      errors.subject ? 'border-red-500 focus:border-red-400' : 'border-dark-border focus:border-neon-blue focus:shadow-glow'
+                    placeholder="e.g. Alex Morgan"
+                    className={`w-full px-4 py-3 bg-slate-900/80 border rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
+                      errors.name ? 'border-rose-500' : 'border-white/10 focus:border-sky-500'
                     }`}
                   />
-                  {errors.subject && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-sm"
-                    >
-                      {errors.subject}
-                    </motion.p>
-                  )}
-                </motion.div>
+                  {errors.name && <p className="text-rose-400 text-xs mt-1">{errors.name}</p>}
+                </div>
 
-                <motion.div
-                  variants={itemVariants}
-                  className="space-y-2"
-                >
-                  <label className="text-sm font-semibold text-neon-blue flex items-center gap-2">
-                    Message
-                    {formData.message && !errors.message && <CheckCircle className="w-4 h-4 text-neon-green" />}
+                <div>
+                  <label className="block text-xs font-mono text-slate-300 mb-2">
+                    Email Address *
                   </label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
                     onChange={handleChange}
-                    placeholder="Tell me about your project, ideas, or just say hello..."
-                    rows={6}
-                    className={`w-full px-4 py-4 bg-dark-bg border rounded-xl text-white placeholder-slate-500 focus:outline-none transition-all resize-none ${
-                      errors.message ? 'border-red-500 focus:border-red-400' : 'border-dark-border focus:border-neon-blue focus:shadow-glow'
+                    placeholder="alex@company.com"
+                    className={`w-full px-4 py-3 bg-slate-900/80 border rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
+                      errors.email ? 'border-rose-500' : 'border-white/10 focus:border-sky-500'
                     }`}
                   />
-                  {errors.message && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-sm"
-                    >
-                      {errors.message}
-                    </motion.p>
-                  )}
-                  <p className="text-slate-500 text-xs">
-                    {formData.message.length}/500 characters
-                  </p>
-                </motion.div>
+                  {errors.email && <p className="text-rose-400 text-xs mt-1">{errors.email}</p>}
+                </div>
+              </div>
 
-                <motion.div
-                  variants={itemVariants}
-                  className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
-                >
-                  <MagneticButton
-                    onClick={handleSubmit}
-                    disabled={loading}
-                    className="group px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl font-semibold text-white hover:shadow-glow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+              <div>
+                <label className="block text-xs font-mono text-slate-300 mb-2">
+                  Subject *
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="Engineering Collaboration / Role Discussion"
+                  className={`w-full px-4 py-3 bg-slate-900/80 border rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none transition-colors ${
+                    errors.subject ? 'border-rose-500' : 'border-white/10 focus:border-sky-500'
+                  }`}
+                />
+                {errors.subject && <p className="text-rose-400 text-xs mt-1">{errors.subject}</p>}
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono text-slate-300 mb-2">
+                  Message *
+                </label>
+                <textarea
+                  name="message"
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell me about your project, timeline, and tech stack requirements..."
+                  className={`w-full px-4 py-3 bg-slate-900/80 border rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none transition-colors resize-none ${
+                    errors.message ? 'border-rose-500' : 'border-white/10 focus:border-sky-500'
+                  }`}
+                />
+                {errors.message && <p className="text-rose-400 text-xs mt-1">{errors.message}</p>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-100 hover:bg-white text-slate-950 font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+              >
+                <span>{loading ? 'Preparing...' : 'Send Message'}</span>
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          </div>
+
+          {/* Quick Info & Social Channels */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Direct Channels */}
+            <div className="glass rounded-3xl p-8 border border-white/10 space-y-4">
+              <h3 className="text-lg font-bold text-white mb-2">Direct Channels</h3>
+              {contactMethods.map((m, idx) => {
+                const Icon = m.icon
+                return (
+                  <a
+                    key={idx}
+                    href={m.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 p-3.5 rounded-2xl bg-slate-900/50 hover:bg-slate-900 border border-white/5 hover:border-white/15 transition-all duration-200 group"
                   >
-                    <span>{loading ? 'Sending...' : 'Send Message'}</span>
-                    {loading ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    )}
-                  </MagneticButton>
-
-                  {submitted && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="flex items-center gap-2 text-neon-green font-semibold"
-                    >
-                      <CheckCircle className="w-5 h-5" />
-                      <span>Message sent successfully!</span>
-                    </motion.div>
-                  )}
-                </motion.div>
-              </form>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="space-y-6"
-          >
-            <h2 className="text-2xl font-bold mb-8">Connect With Me</h2>
-
-            {contactMethods.map((method, idx) => {
-              const Icon = method.icon
-              return (
-                <motion.a
-                  key={idx}
-                  href={method.href}
-                  variants={itemVariants}
-                  whileHover={{ x: 10 }}
-                  className="glass rounded-lg p-6 block group"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-neon-blue/20 to-neon-purple/20 group-hover:from-neon-blue/40 group-hover:to-neon-purple/40 transition">
-                      <Icon className="text-neon-blue" size={24} />
+                    <div className="w-10 h-10 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center text-sky-400 flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <Icon className="w-5 h-5" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-white mb-1">{method.label}</h3>
-                      <p className="text-slate-400 text-sm group-hover:text-neon-blue transition">
-                        {method.value}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-white group-hover:text-sky-300 transition-colors">
+                        {m.label}
+                      </p>
+                      <p className="text-xs text-slate-400 truncate font-mono">
+                        {m.value}
+                      </p>
+                      <p className="text-[10px] text-slate-500 mt-0.5">
+                        {m.desc}
                       </p>
                     </div>
-                  </div>
-                </motion.a>
-              )
-            })}
+                    <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-slate-300 group-hover:translate-x-1 transition-all" />
+                  </a>
+                )
+              })}
+            </div>
 
-            <motion.div
-              variants={itemVariants}
-              className="glass rounded-lg p-6 mt-8"
-            >
-              <h3 className="font-semibold text-white mb-3">Quick Facts</h3>
-              <ul className="space-y-2 text-sm text-slate-400">
-                <li>📍 Based in Your City</li>
-                <li>🕒 Available for Freelance</li>
-                <li>💬 Response within 24 hours</li>
-                <li>🌍 Open to Remote Work</li>
-              </ul>
-            </motion.div>
-          </motion.div>
+            {/* Quick Metadata Card */}
+            <div className="glass rounded-3xl p-6 border border-white/10 space-y-3 text-xs">
+              <h4 className="text-xs uppercase font-mono tracking-wider text-slate-400 font-semibold mb-3">
+                Operational Availability
+              </h4>
+              {quickMeta.map((item, i) => {
+                const Icon = item.icon
+                return (
+                  <div key={i} className="flex items-center gap-3 text-slate-300">
+                    <Icon className="w-4 h-4 text-sky-400 flex-shrink-0" />
+                    <div>
+                      <span className="text-slate-500 block text-[10px]">{item.label}</span>
+                      <span className="font-medium text-slate-200">{item.value}</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>

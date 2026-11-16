@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { getTechStackIcons } from '@utils/getIconUrl'
 
 interface TechCardProps {
@@ -11,31 +11,24 @@ interface TechCardProps {
 function TechCard({ name, url, index }: TechCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      whileHover={{ 
-        scale: 1.05, 
-        y: -5,
-        boxShadow: "0 20px 25px -5px rgba(0, 212, 255, 0.1), 0 10px 10px -5px rgba(0, 212, 255, 0.04)"
-      }}
-      className="group relative bg-dark-card/40 backdrop-blur-md border border-neon-blue/20 p-4 rounded-2xl flex flex-col items-center justify-center gap-3 hover:border-neon-blue/50 transition-all duration-300"
+      transition={{ duration: 0.4, delay: index * 0.03 }}
+      whileHover={{ y: -3, scale: 1.02 }}
+      className="group relative bg-slate-900/60 backdrop-blur-md border border-white/10 p-3.5 sm:p-4 rounded-2xl flex flex-col items-center justify-center gap-2.5 hover:border-white/20 hover:bg-slate-800/80 transition-all duration-200"
     >
-      <div className="relative w-12 h-12 flex items-center justify-center">
-        <motion.img 
-          src={url} 
+      <div className="relative w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center">
+        <img
+          src={url}
           alt={name}
-          className="w-10 h-10 object-contain z-10 grayscale group-hover:grayscale-0 transition-all duration-300"
+          className="w-8 h-8 sm:w-9 sm:h-9 object-contain z-10 transition-transform duration-200 group-hover:scale-110"
+          loading="lazy"
         />
-        <div className="absolute inset-0 bg-neon-blue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
-      <span className="text-sm font-medium text-slate-400 group-hover:text-white transition-colors duration-300">
+      <span className="text-xs font-medium text-slate-300 group-hover:text-white transition-colors duration-200 text-center font-mono">
         {name}
       </span>
-      
-      {/* Subtle background glow on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/5 to-neon-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
     </motion.div>
   )
 }
@@ -67,23 +60,25 @@ export default function TechSphere({ technologies }: TechSphereProps) {
   }, [])
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.8 }}
-      className="w-full py-12"
+      className="w-full pt-2 pb-6"
     >
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold mb-4 gradient-text">
-          Tech Stack
-        </h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">
-          The technologies, frameworks, and tools I use to bring ideas to life.
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-2">
+        <div>
+          <span className="text-xs uppercase tracking-widest font-mono text-sky-400 block mb-1">
+            Technology Ecosystem
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Toolchain & Languages
+          </h2>
+        </div>
+        <p className="text-xs sm:text-sm text-slate-400 max-w-md">
+          Frameworks, platforms, and databases employed across production services.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
         {techStack.map((tech, idx) => (
           <TechCard
             key={tech.name}
@@ -93,6 +88,6 @@ export default function TechSphere({ technologies }: TechSphereProps) {
           />
         ))}
       </div>
-    </motion.div>
+    </div>
   )
 }
